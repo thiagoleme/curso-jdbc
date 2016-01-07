@@ -19,7 +19,7 @@ public class TestaProduto {
 	}
 
 	@Test
-	public void InsereProdutoNoBanco() {
+	public void InsereProduto() {
 		try (Connection connection = new ConnectionPool().getConnection()) {
 			ProdutoDAO dao = new ProdutoDAO(connection);
 			dao.salva(produto);
@@ -29,9 +29,9 @@ public class TestaProduto {
 	}
 
 	@Test
-	public void ListaProdutoDoBanco() {
+	public void ListaProduto() {
 		List<Produto> lista = null;
-		
+
 		try (Connection connection = new ConnectionPool().getConnection()) {
 			ProdutoDAO dao = new ProdutoDAO(connection);
 			lista = dao.lista();
@@ -40,9 +40,8 @@ public class TestaProduto {
 		}
 
 		for (Produto produto : lista) {
-			System.out.println(	"\n\nID: " + produto.getId() 
-								+ "\nNome: " + produto.getNome() 
-								+ "\nDescrição: " + produto.getDescricao());
+			System.out.println("\n\nID: " + produto.getId() + "\nNome: " + produto.getNome() + "\nDescrição: "
+					+ produto.getDescricao());
 		}
 	}
 

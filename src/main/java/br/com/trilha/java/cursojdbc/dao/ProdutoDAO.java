@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.trilha.java.cursojdbc.model.Categoria;
 import br.com.trilha.java.cursojdbc.model.Produto;
 
 public class ProdutoDAO {
@@ -40,29 +41,43 @@ public class ProdutoDAO {
 		}
 	}
 
-	public List<Produto> lista() {
+	public List<Produto> lista() throws SQLException {
 		produtos = new ArrayList<>();
-		
+
 		String sql = "select * from Produto";
-		try (PreparedStatement statement = connection.prepareStatement(sql)){
+		try (PreparedStatement statement = connection.prepareStatement(sql)) {
 			statement.execute();
 
-			try(ResultSet resultSet = statement.getResultSet()){
-				while (resultSet.next()) {
-					int id = resultSet.getInt("id");
-					String nome = resultSet.getString("nome");
-					String descricao = resultSet.getString("descricao");
-					
-					Produto p = new Produto(nome, descricao);
-					p.setId(id);
-					
-					produtos.add(p);
-				}
-			}
-		} catch (SQLException e) {
-			System.out.println("Erro: " + e.getMessage());
+			transformaResultadoEmProdutos(statement);
 		}
 		return produtos;
 	}
 
+	public List<Produto> busca(Categoria c) throws SQLException {
+		produtos = new ArrayList<>();
+
+		String sql = "select * from Produto where categoria_id = ?";
+		try (PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setInt(1, c.getId());
+			statement.execute();
+
+			transformaResultadoEmProdutos(statement);
+		}
+		return produtos;
+	}
+
+	private void transformaResultadoEmProdutos(PreparedStatement statement) throws SQLException {
+		try (ResultSet resultSet = statement.getResultSet()) {
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String nome = resultSet.getString("nome");
+				String descricao = resultSet.getString("descricao");
+
+				Produto p = new Produto(nome, descricao);
+				p.setId(id);
+
+				produtos.add(p);
+			}
+		}
+	}
 }

@@ -1,7 +1,6 @@
 package br.com.trilha.java.cursojdbc;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
