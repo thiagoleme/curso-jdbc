@@ -1,6 +1,7 @@
 package br.com.trilha.java.cursojdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,10 +15,15 @@ public class TestaInsercao {
 		try {
 			Connection connection = Database.getConnection();
 
-			Statement statement = connection.createStatement();
+			String nome = "Notebook' ";
+			String descricao = "Notebook i5";
+								
+			String sql = "insert into Produto (nome, descricao) values(?, ?)";
+			PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			statement.setString(1, nome);
+			statement.setString(2, descricao);
 
-			statement.execute("insert into produto (nome, descricao) values ('Notebook', 'Notebook i5')",
-					Statement.RETURN_GENERATED_KEYS);
+			statement.execute();
 
 			ResultSet generatedKeys = statement.getGeneratedKeys();
 
