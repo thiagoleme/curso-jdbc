@@ -1,7 +1,6 @@
 package br.com.trilha.java.cursojdbc;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,7 +12,7 @@ public class TestaListagem {
 	@Test
 	public void RetornaListagem() {
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/loja-virtual", "SA", "");
+			Connection connection = Database.getConnection();
 
 			Statement statement = connection.createStatement();
 			boolean result = statement.execute("select * from Produto");
