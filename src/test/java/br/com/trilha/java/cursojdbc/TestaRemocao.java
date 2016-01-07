@@ -16,7 +16,7 @@ public class TestaRemocao {
 
 			Statement statement = connection.createStatement();
 
-			statement.execute("delete from Produto where id > 3");
+			statement.execute("delete from Produto where id > 2");
 
 			System.out.println("Qtde de Registros deletados: " + statement.getUpdateCount());
 
