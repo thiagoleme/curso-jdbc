@@ -12,7 +12,7 @@ public class TestaInsercao {
 
 	@Test
 	public void InsereNoBanco() {
-		try (Connection connection = Database.getConnection()) {
+		try (Connection connection = new ConnectionPool().getConnection()) {
 			String sql = "insert into Produto (nome, descricao) values(?, ?)";
 			connection.setAutoCommit(false);
 			
@@ -38,9 +38,9 @@ public class TestaInsercao {
 	}
 
 	private void adiciona(String nome, String descricao, PreparedStatement statement) throws SQLException {
-		if (nome.equals("Blueray")) {
-			throw new IllegalArgumentException("Problema ocorrido");
-		}
+//		if (nome.equals("Blueray")) {
+//			throw new IllegalArgumentException("Problema ocorrido");
+//		}
 
 		statement.setString(1, nome);
 		statement.setString(2, descricao);

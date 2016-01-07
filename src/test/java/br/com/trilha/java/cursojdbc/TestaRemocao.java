@@ -12,7 +12,7 @@ public class TestaRemocao {
 	@Test
 	public void RemoveDoBanco() {
 		try {
-			Connection connection = Database.getConnection();
+			Connection connection = new ConnectionPool().getConnection();
 
 			Statement statement = connection.createStatement();
 

@@ -12,7 +12,7 @@ public class TestaListagem {
 	@Test
 	public void RetornaListagem() {
 		try {
-			Connection connection = Database.getConnection();
+			Connection connection = new ConnectionPool().getConnection();
 
 			Statement statement = connection.createStatement();
 			boolean result = statement.execute("select * from Produto");
